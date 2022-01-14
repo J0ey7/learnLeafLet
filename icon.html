@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+      integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+      crossorigin=""
+    />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="map" style="width: 500px; height: 500px"></div>
+    <script
+      src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+      integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+      crossorigin=""
+    ></script>
+    <script>
+      var map = L.map("map").setView([51.505, -0.09], 12);
+      L.tileLayer(
+        "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoiam9leTc4NyIsImEiOiJja3liODR3YmQwY3dmMm5zMHF1NmQyeDNtIn0.k57qJ4CxsrYHU5U55xd1zQ",
+        {
+          attribution:
+            'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+          maxZoom: 18,
+          // id: "mapbox/streets-v11",
+          id: "joey787/ckybaudvb2pkq15ny9ym09zsv",
+          tileSize: 512,
+          zoomOffset: -1,
+          accessToken: "your.mapbox.access.token",
+        }
+      ).addTo(map);
+
+      var greenIcon = L.icon({
+        iconUrl: "./assest/leaf-green.png",
+        shadowUrl: "./assest/leaf-shadow.png",
+
+        iconSize: [38, 95], // size of the icon
+        shadowSize: [50, 64], // size of the shadow
+        iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+        shadowAnchor: [4, 62], // the same for the shadow
+        popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
+      });
+
+      // L.marker([51.5, -0.09], { icon: greenIcon }).addTo(map);
+
+      // 定义多个具有相同特点的图标类
+
+      // 1. 使用new创建自定义图标
+      var LeafIcon = L.Icon.extend({
+        options: {
+          shadowUrl: "./assest/leaf-shadow.png",
+          iconSize: [38, 95],
+          shadowSize: [50, 64],
+          iconAnchor: [4, 62],
+          popupAnchoe: [-3, -76],
+        },
+      });
+      var greenIcon = new LeafIcon({ iconUrl: "./assest/leaf-green.png" });
+      var redIcon = new LeafIcon({ iconUrl: "./assest/leaf-red.png" });
+      var orangeIcon = new LeafIcon({ iconUrl: "./assest/leaf-orange.png" });
+
+      // 2. 使用构造函数
+      // L.icon = function (options) {
+      //   return new L.icon({
+      //     shadowUrl: "./assest/leaf-shadow.png",
+      //     iconSize: [38, 95],
+      //     shadowSize: [50, 64],
+      //     iconAnchor: [4, 62],
+      //     popupAnchoe: [-3, -76],
+      //   });
+      // };
+
+      L.marker([51.5, -0.09], { icon: greenIcon })
+        .addTo(map)
+        .bindPopup("I am a green leaf.");
+      L.marker([51.495, -0.083], { icon: redIcon })
+        .addTo(map)
+        .bindPopup("I am a red leaf.");
+      L.marker([51.49, -0.1], { icon: orangeIcon })
+        .addTo(map)
+        .bindPopup("I am an orange leaf.");
+    </script>
+  </body>
+</html>
